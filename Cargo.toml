@@ -17,6 +17,10 @@ path = "src/lib.rs"
 [workspace]
 members = ["crates/bevy_extended_ui_macros"]
 
+[features]
+default = ["hotreload"]
+hotreload = ["bevy/file_watcher"]
+
 [dependencies.bevy_extended_ui_macros]
 path = "crates/bevy_extended_ui_macros"
 version = "0.1.0"
@@ -25,7 +29,7 @@ version = "0.1.0"
 [dependencies.bevy]
 version = "0.17.3"
 default-features = true
-features = ["file_watcher", "jpeg", "png", "webp"]
+features = ["jpeg", "png", "webp"]
 
 # Html Converter
 [dependencies.kuchiki]
