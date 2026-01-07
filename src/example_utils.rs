@@ -1,10 +1,7 @@
-use bevy::input::common_conditions::input_toggle_active;
 use bevy::prelude::*;
 use bevy::window::WindowResolution;
 
-use bevy_inspector_egui::bevy_egui::EguiPlugin;
-use bevy_inspector_egui::quick::WorldInspectorPlugin;
-use crate::ExtendedUiPlugin;
+use crate::{ExtendedUiPlugin, ExtendedUiConfiguration};
 
 pub fn make_app(title: impl Into<String>) -> App {
     let mut app = App::new();
@@ -17,11 +14,13 @@ pub fn make_app(title: impl Into<String>) -> App {
         }),
         ..default()
     }))
-        .add_plugins(EguiPlugin::default())
-        .add_plugins(
-            WorldInspectorPlugin::default().run_if(input_toggle_active(false, KeyCode::F1)),
-        )
-        .add_plugins(ExtendedUiPlugin);
+        .add_plugins(ExtendedUiPlugin)
+        .add_systems(Startup, setup);
 
     app
+}
+
+fn setup(mut commands: Commands, mut configuration: ResMut<ExtendedUiConfiguration>) {
+    commands.spawn(Camera2d);
+    configuration.enable_default_camera = false;
 }
